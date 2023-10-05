@@ -6,6 +6,9 @@ module.exports = {
       colors: {
         brand: '#f5405b',
       },
+      backgroundImage: {
+        banner: `url('../public/image/banner.jpg')`,
+      },
     },
   },
   plugins: [],

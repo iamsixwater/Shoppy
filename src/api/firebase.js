@@ -61,7 +61,20 @@ export async function addProduct(product, imageURL) {
     ...product,
     id,
     image: imageURL,
-    cost: parseInt(product.cost),
+    price: parseInt(product.price),
     options: product.options.split(','),
   });
+}
+
+export async function getProducts() {
+  return get(ref(database, 'products')) //
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        return Object.values(snapshot.val());
+      }
+      return [];
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 }

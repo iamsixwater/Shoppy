@@ -61,9 +61,9 @@ export default function AddProduct() {
         />
         <input
           type='text'
-          name='cost'
-          value={product.cost ?? ''}
-          placeholder='Cost'
+          name='price'
+          value={product.price ?? ''}
+          placeholder='Price'
           onChange={handleChange}
           required
         />
