@@ -1,17 +1,16 @@
 import React from 'react';
+import useCart from '../hooks/useCart';
 import { FaPlus, FaEquals } from 'react-icons/fa';
-import { useAuthContext } from '../context/AuthContext';
-import { getCart } from '../api/firebase';
-import { useQuery } from '@tanstack/react-query';
 import CartItem from '../components/CartItem';
 import PriceCard from '../components/PriceCard';
 import Button from '../components/ui/Button';
 
-const SHIPPING_PRICE = 5;
+const SHIPPING_FEE = 5;
 
 export default function Cart() {
-  const { uid } = useAuthContext();
-  const { isLoading, data: products } = useQuery(['carts'], () => getCart(uid));
+  const {
+    cartQuery: { isLoading, data: products },
+  } = useCart();
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -32,16 +31,16 @@ export default function Cart() {
       {hasProduct && (
         <ul className='border-b border-gray-300 mb-6 py-4 px-8'>
           {products.map((product) => (
-            <CartItem key={product.id} product={product} uid={uid} />
+            <CartItem key={product.id} product={product} />
           ))}
         </ul>
       )}
       <div className='flex items-center justify-between px-2 md:px-8 lg:px-16 mb-6'>
         <PriceCard text='Products Price' price={totalPrice} />
         <FaPlus className='shrink-0' />
-        <PriceCard text='Shipping Price' price={SHIPPING_PRICE} />
+        <PriceCard text='Shipping Price' price={SHIPPING_FEE} />
         <FaEquals className='shrink-0' />
-        <PriceCard text='Total Price' price={totalPrice + SHIPPING_PRICE} />
+        <PriceCard text='Total Price' price={totalPrice + SHIPPING_FEE} />
       </div>
       <Button text='Order' />
     </section>

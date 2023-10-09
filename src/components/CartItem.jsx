@@ -1,22 +1,23 @@
 import React from 'react';
+import useCart from '../hooks/useCart';
 import { CiSquarePlus, CiSquareMinus } from 'react-icons/ci';
 import { BiSolidTrashAlt } from 'react-icons/bi';
-import { removeCart, updateCart } from '../api/firebase';
 
 const ICON_CLASS = 'mx-2 hover:text-brand transition-all cursor-pointer';
 
 export default function CartItem({
-  uid,
   product,
   product: { id, title, price, quantity, image, option },
 }) {
+  const { updateCart, removeFromCart } = useCart();
+
   const handleMinus = () => {
     if (quantity < 2) return;
-    updateCart(uid, { ...product, quantity: quantity - 1 });
+    updateCart.mutate({ ...product, quantity: quantity - 1 });
   };
   const handlePlus = () =>
-    updateCart(uid, { ...product, quantity: quantity + 1 });
-  const handleDelete = () => removeCart(uid, id);
+    updateCart.mutate({ ...product, quantity: quantity + 1 });
+  const handleDelete = () => removeFromCart.mutate(id);
 
   return (
     <li className='flex justify-between items-center my-2'>
