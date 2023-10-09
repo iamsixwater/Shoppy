@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { HiOutlineShoppingBag, HiOutlinePencil } from 'react-icons/hi';
 import User from './User';
 import Button from './ui/Button';
-import { useAuthContext } from './context/AuthContext';
+import { useAuthContext } from '../context/AuthContext';
+import CartStatus from './CartStatus';
 
 export default function Header() {
   const { user, login, logout } = useAuthContext();
@@ -16,7 +17,11 @@ export default function Header() {
       </Link>
       <nav className='flex items-center gap-4 font-semibold'>
         <Link to='/products'>Products</Link>
-        {user && <Link to='/carts'>Carts</Link>}
+        {user && (
+          <Link to='/carts'>
+            <CartStatus />
+          </Link>
+        )}
         {user && user.isAdmin && (
           <Link to='/products/add' className='text-2xl'>
             <HiOutlinePencil />
