@@ -9,7 +9,7 @@ export default function CartItem({
   product,
   product: { id, title, price, quantity, image, option },
 }) {
-  const { updateCart, removeFromCart } = useCart();
+  const { updateCart, removeItem } = useCart();
 
   const handleMinus = () => {
     if (quantity < 2) return;
@@ -17,7 +17,7 @@ export default function CartItem({
   };
   const handlePlus = () =>
     updateCart.mutate({ ...product, quantity: quantity + 1 });
-  const handleDelete = () => removeFromCart.mutate(id);
+  const handleDelete = () => removeItem.mutate(id);
 
   return (
     <li className='flex justify-between items-center my-2'>
