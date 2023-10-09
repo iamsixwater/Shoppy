@@ -4,6 +4,7 @@ import useCart from '../hooks/useCart';
 import Button from '../components/ui/Button';
 
 export default function ProductDetail() {
+  const [isSucceed, setIsSucceed] = useState(false);
   const {
     state: {
       product: { id, category, title, description, image, price, options },
@@ -16,7 +17,12 @@ export default function ProductDetail() {
   };
   const handleClick = () => {
     const product = { id, title, image, price, quantity: 1, option: selected };
-    updateCart.mutate(product);
+    updateCart.mutate(product, {
+      onSuccess: () => {
+        setIsSucceed(true);
+        setTimeout(() => setIsSucceed(false), 4000);
+      },
+    });
   };
 
   return (
@@ -47,6 +53,9 @@ export default function ProductDetail() {
             </select>
           </div>
           <Button text='Add to cart' onClick={handleClick} />
+          {isSucceed && (
+            <p className='pt-2'>✅ Successfully added to a cart!</p>
+          )}
         </section>
       </section>
     </>
