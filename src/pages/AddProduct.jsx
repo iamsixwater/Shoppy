@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../components/ui/Button';
 import upload from '../api/uploader';
-import { addProduct } from '../api/firebase';
+import useProducts from '../hooks/useProducts';
 
 export default function AddProduct() {
   const [product, setProduct] = useState({});
@@ -9,17 +9,24 @@ export default function AddProduct() {
   const [isUploading, setIsUploading] = useState(false);
   const [isSucceed, setIsSucceed] = useState(false);
 
+  const { addNewProduct } = useProducts();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsUploading(true);
     upload(file)
       .then((url) => {
-        addProduct(product, url).then(() => {
-          setIsSucceed(true);
-          setTimeout(() => {
-            setIsSucceed(false);
-          }, 4000);
-        });
+        addNewProduct.mutate(
+          { product, url },
+          {
+            onSuccess: () => {
+              setIsSucceed(true);
+              setTimeout(() => {
+                setIsSucceed(false);
+              }, 4000);
+            },
+          }
+        );
       })
       .finally(() => setIsUploading(false));
   };
