@@ -40,7 +40,7 @@ export default function Cart() {
           <div className='flex items-center justify-between px-2 md:px-8 lg:px-16 mb-6'>
             <PriceCard text='Products Price' price={totalPrice || 0} />
             <FaPlus className='shrink-0' />
-            <PriceCard text='Shipping Price' price={SHIPPING_FEE} />
+            <PriceCard text='Shipping Fee' price={SHIPPING_FEE} />
             <FaEquals className='shrink-0' />
             <PriceCard
               text='Total Price'
