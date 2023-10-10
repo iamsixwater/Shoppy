@@ -1,26 +1,41 @@
 import React, { useState } from 'react';
+import { useAuthContext } from '../context/AuthContext';
 import { useLocation } from 'react-router-dom';
 import useCart from '../hooks/useCart';
 import Button from '../components/ui/Button';
+import useProducts from '../hooks/useProducts';
 
 export default function ProductDetail() {
+  const { user } = useAuthContext();
   const [isSucceed, setIsSucceed] = useState(false);
+  const [deleteSucceed, setDeleteSucceed] = useState(false);
   const {
     state: {
+      product,
       product: { id, category, title, description, image, price, options },
     },
   } = useLocation();
   const { updateCart } = useCart();
+  const { removeProduct } = useProducts();
+
   const [selected, setSelected] = useState(options && options[0]);
   const handleChange = (e) => {
     setSelected(e.target.value);
   };
-  const handleClick = () => {
+  const handleAddToCart = () => {
     const product = { id, title, image, price, quantity: 1, option: selected };
     updateCart.mutate(product, {
       onSuccess: () => {
         setIsSucceed(true);
         setTimeout(() => setIsSucceed(false), 4000);
+      },
+    });
+  };
+  const handleDelete = () => {
+    removeProduct.mutate(product, {
+      onSuccess: () => {
+        setDeleteSucceed(true);
+        setTimeout(() => setDeleteSucceed(false), 4000);
       },
     });
   };
@@ -52,9 +67,17 @@ export default function ProductDetail() {
                 ))}
             </select>
           </div>
-          <Button text='Add to cart' onClick={handleClick} />
+          <div className='flex flex-col gap-2'>
+            <Button text='Add to cart' onClick={handleAddToCart} />
+            {user && user.isAdmin && (
+              <Button text='Delete' onClick={handleDelete} />
+            )}
+          </div>
           {isSucceed && (
             <p className='pt-2'>✅ Successfully added to a cart!</p>
+          )}
+          {deleteSucceed && (
+            <p className='pt-2'>✅ Successfully deleted from products!</p>
           )}
         </section>
       </section>

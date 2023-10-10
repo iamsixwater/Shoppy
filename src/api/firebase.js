@@ -66,6 +66,10 @@ export async function addProduct(product, imageURL) {
   });
 }
 
+export async function removeProduct(product) {
+  return remove(ref(database, `products/${product.id}`));
+}
+
 export async function getProducts() {
   return get(ref(database, 'products')) //
     .then((snapshot) => {
@@ -81,9 +85,20 @@ export async function getProducts() {
 
 export async function getCart(userId) {
   return get(ref(database, `carts/${userId}`)) //
-    .then((snapshot) => {
+    .then(async (snapshot) => {
       const items = snapshot.val() || {};
-      return Object.values(items);
+
+      const activeItems = await getProducts().then((products) =>
+        products.map((product) => product.id)
+      );
+
+      const filteredItems = Object.keys(items)
+        .filter((key) => activeItems.includes(key))
+        .reduce((cur, key) => {
+          return Object.assign(cur, { [key]: items[key] });
+        }, {});
+
+      return Object.values(filteredItems);
     });
 }
 
