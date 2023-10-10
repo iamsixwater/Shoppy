@@ -36,6 +36,7 @@ A Online shopping web page with React JS.
 
 - Show items and total prices in a cart
   <br>
+  <img width="1164" alt="스크린샷 2023-10-10 오후 6 36 28" src="https://github.com/iamsixwater/Shoppy/assets/95326050/a4c553ca-9278-49b3-8cdf-b5aea80e0e5c">
 
 - Add a new product with an admin account
   <br>
