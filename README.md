@@ -1,6 +1,6 @@
 # ✏️ Shoppy
 
-A Online shopping web page with React JS.
+An online shopping web page with React JS.
 <br>
 🚀 **VISIT**: https://kaleidoscopic-wisp-c1b675.netlify.app/
 
