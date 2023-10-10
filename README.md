@@ -31,7 +31,7 @@ A Online shopping web page with React JS.
 
 - Detailed product page to make an order
   <br>
-  <img width="1040" alt="스크린샷 2023-10-10 오후 6 18 25" src="https://github.com/iamsixwater/Shoppy/assets/95326050/c1fbf336-dc75-4361-8c6a-d8559ed33a27">
+  <img width="797" alt="스크린샷 2023-10-10 오후 6 39 56" src="https://github.com/iamsixwater/Shoppy/assets/95326050/6cfa148c-a373-4729-83e9-4018a1731e28">
 
 - Show items and total prices in a cart
   <br>
